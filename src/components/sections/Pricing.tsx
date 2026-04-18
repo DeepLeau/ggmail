@@ -1,228 +1,154 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { ArrowRight } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Check } from 'lucide-react'
+import { PRICING_PLANS } from '@/lib/data'
+import { cn } from '@/lib/utils'
+import type { Variants } from 'framer-motion'
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+      delay: i * 0.12,
+    },
+  }),
+}
 
 export function Pricing() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.unobserve(entry.target)
-        }
-      },
-      { threshold: 0.15 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
-  const plans = [
-    {
-      name: 'Starter',
-      price: '$299',
-      highlighted: false,
-      badge: null,
-      description: 'Up to 50 employees. Unlimited expense submissions. Basic approvals. 5 integrations.',
-      features: [
-        'Up to 50 employees',
-        'Unlimited expense submissions',
-        'Basic approval flows',
-        '5 integrations',
-        'Email support',
-      ],
-      cta: 'Start Free Trial',
-      ctaStyle: 'outline' as const,
-    },
-    {
-      name: 'Growth',
-      price: '$799',
-      highlighted: true,
-      badge: null,
-      description: 'Up to 250 employees. Advanced approval flows. Full integration suite. Custom policies. Priority support.',
-      features: [
-        'Up to 250 employees',
-        'Advanced approval flows',
-        'Full integration suite',
-        'Custom expense policies',
-        'Priority support',
-        'Analytics & reporting',
-      ],
-      cta: 'Request Demo',
-      ctaStyle: 'primary' as const,
-    },
-    {
-      name: 'Enterprise',
-      price: 'Custom',
-      highlighted: false,
-      badge: null,
-      description: '500+ employees. Dedicated CSM. Custom integrations. SOC 2 Type II. SLA guarantee.',
-      features: [
-        '500+ employees',
-        'Dedicated CSM',
-        'Custom integrations',
-        'SOC 2 Type II',
-        'SLA guarantee',
-        'Advanced security',
-      ],
-      cta: 'Talk to Sales',
-      ctaStyle: 'dark' as const,
-    },
-  ]
-
   return (
-    <section
-      ref={sectionRef}
-      className="relative py-[clamp(5.5rem,9vw,11rem)] px-[clamp(1.5rem,5vw,4rem)]"
-      style={{ background: 'var(--surface-1)' }}
-    >
-      {/* Scan line */}
-      <div className="scan-line absolute top-0 left-0 w-full h-[1px] pointer-events-none" style={{ background: 'rgba(255,255,255,0.10)' }} />
-      <div className="max-w-[clamp(70rem,92vw,96rem)] mx-auto">
-        <div className="text-center mb-16 reveal-up" style={isVisible ? { opacity: 1, transform: 'translateY(0)' } : {}}>
-          <span className="font-mono text-xs font-medium uppercase tracking-[0.18em] inline-block mb-4" style={{ color: 'var(--amber)' }}>[06] PRICING</span>
-          <h2 className="font-display font-light leading-[1.1] tracking-tight text-[clamp(2rem,3.5vw,3.25rem)] mb-4 mx-auto" style={{ color: 'var(--text-1)' }}>
-            Pricing by headcount. Not by seat.
+    <section className="py-20 lg:py-24 px-4 sm:px-6" style={{ background: 'var(--bg)' }}>
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14 lg:mb-16">
+          <span
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-5"
+            style={{
+              background: 'var(--violet-dim)',
+              color: 'var(--violet)',
+              border: '1px solid rgba(124, 58, 237, 0.2)',
+            }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--violet)' }} />
+            Tarifs
+          </span>
+          <h2
+            className="text-3xl lg:text-4xl font-bold tracking-tight mb-4"
+            style={{ color: 'var(--text-1)', letterSpacing: '-0.025em' }}
+          >
+            Simple. Transparent.
           </h2>
-          <p className="font-mono text-xs" style={{ color: 'var(--text-2)' }}>
-            All plans: unlimited receipts, OCR extraction, audit trail. No per-user fees.
+          <p className="text-base max-w-md mx-auto" style={{ color: 'var(--text-2)', lineHeight: '1.7' }}>
+            Un seul critère de facturation : le volume de questions. Pas de surprise, pas de frais cachés.
           </p>
         </div>
 
-        {/* Pricing Grid */}
-        <div
-          className="grid grid-cols-1 md:grid-cols-3 gap-0 reveal-up"
-          style={{
-            ...(isVisible ? { opacity: 1, transform: 'translateY(0)' } : {}),
-            transitionDelay: '200ms',
-            border: '1px solid var(--border)',
-          }}
-        >
-          {plans.map((plan, i) => (
-            <div
-              key={plan.name}
-              className="p-8 md:p-10 flex flex-col"
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+          {PRICING_PLANS.map((plan, i) => (
+            <motion.div
+              key={i}
+              custom={i}
+              variants={cardVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-60px' }}
+              className={cn('relative rounded-2xl p-7 flex flex-col gap-6', plan.highlighted ? 'md:-mt-5 md:mb-0' : '')}
               style={{
-                background: plan.highlighted ? 'var(--surface-1)' : 'rgba(17,17,24,0.5)',
-                borderTop: plan.highlighted ? '2px solid var(--amber)' : 'none',
-                borderRight: i < plans.length - 1 ? '1px solid var(--border)' : 'none',
-                marginTop: plan.highlighted ? '-2px' : 0,
-                marginBottom: plan.highlighted ? '-2px' : 0,
-                boxShadow: plan.highlighted ? '0 0 40px rgba(59,130,246,0.05)' : 'none',
-                position: 'relative',
-                zIndex: plan.highlighted ? 10 : 1,
-                transition: 'background 0.3s ease',
+                background: plan.highlighted ? 'var(--bg)' : 'var(--surface-1)',
+                border: plan.highlighted ? '2px solid var(--accent)' : '1px solid var(--border)',
+                boxShadow: plan.highlighted ? '0 12px 40px rgba(37, 99, 235, 0.15)' : '0 1px 4px rgba(0,0,0,0.04)',
               }}
             >
-              <span className="font-mono text-xs font-bold uppercase tracking-widest mb-2 block" style={{ color: plan.highlighted ? 'var(--amber)' : 'var(--text-1)' }}>
-                {plan.name}
-              </span>
-              <div className="mb-6">
-                <span className="font-mono text-3xl font-medium" style={{ color: 'var(--text-1)' }}>{plan.price}</span>
-                {plan.price !== 'Custom' && (
-                  <span className="font-mono text-xs uppercase ml-1" style={{ color: 'var(--text-2)' }}>/mo</span>
-                )}
-              </div>
-              <p className="font-body text-sm mb-8 flex-grow" style={{ color: 'var(--text-2)', lineHeight: 1.6 }}>
-                {plan.description}
-              </p>
-
-              {/* CTA Button */}
-              {plan.ctaStyle === 'primary' && (
-                <a
-                  href="#demo"
-                  className="relative w-full py-4 font-mono text-xs font-semibold uppercase tracking-[0.1em] overflow-hidden group"
-                  style={{
-                    background: 'var(--accent)',
-                    color: '#ffffff',
-                    boxShadow: '0 4px 20px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.15)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.transform = 'translateY(-2px)'
-                    el.style.boxShadow = '0 8px 32px rgba(59,130,246,0.35), inset 0 1px 0 rgba(255,255,255,0.15)'
-                    el.style.animation = 'glow-pulse 1.5s ease-in-out infinite'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.transform = 'translateY(0)'
-                    el.style.boxShadow = '0 4px 20px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'
-                    el.style.animation = 'none'
-                  }}
-                >
-                  <span className="relative z-10 flex items-center gap-2" style={{ color: '#ffffff' }}>
-                    {plan.cta} <ArrowRight size={14} strokeWidth={1.5} className="transition-transform group-hover:translate-x-1" />
+              {/* Popular badge */}
+              {plan.badge && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                  <span className="px-4 py-1 rounded-full text-xs font-semibold text-white" style={{ background: 'var(--accent)' }}>
+                    {plan.badge}
                   </span>
-                </a>
+                </div>
               )}
 
-              {plan.ctaStyle === 'outline' && (
-                <a
-                  href="#"
-                  className="relative w-full py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] group"
-                  style={{
-                    background: 'var(--surface-1)',
-                    color: 'var(--text-1)',
-                    border: '1px solid var(--border-md)',
-                    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.transform = 'translateY(-2px)'
-                    el.style.boxShadow = '0 8px 24px rgba(0,0,0,0.15)'
-                    el.style.borderColor = 'var(--border-hi)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.transform = 'translateY(0)'
-                    el.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)'
-                    el.style.borderColor = 'var(--border-md)'
-                  }}
-                >
-                  {plan.cta}
-                </a>
-              )}
+              {/* Name */}
+              <div>
+                <p className="text-base font-semibold mb-2" style={{ color: 'var(--text-1)', letterSpacing: '-0.01em' }}>
+                  {plan.name}
+                </p>
+                <p className="text-sm" style={{ color: 'var(--text-2)', lineHeight: '1.6' }}>
+                  {plan.description}
+                </p>
+              </div>
 
-              {plan.ctaStyle === 'dark' && (
-                <a
-                  href="#"
-                  className="relative w-full py-3 font-mono text-xs font-medium uppercase tracking-[0.1em] group"
-                  style={{
-                    background: 'var(--surface-2)',
-                    color: 'var(--text-1)',
-                    border: '1px solid var(--border-md)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease',
-                  }}
-                  onMouseEnter={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = 'var(--surface-1)'
-                    el.style.transform = 'translateY(-2px)'
-                  }}
-                  onMouseLeave={(e) => {
-                    const el = e.currentTarget as HTMLAnchorElement
-                    el.style.background = 'var(--surface-2)'
-                    el.style.transform = 'translateY(0)'
-                  }}
+              {/* Price */}
+              <div className="flex items-baseline gap-1.5">
+                <span
+                  className="text-4xl font-bold tracking-tight"
+                  style={{ color: plan.highlighted ? 'var(--accent)' : 'var(--text-1)', letterSpacing: '-0.03em' }}
                 >
-                  {plan.cta}
-                </a>
-              )}
-            </div>
+                  {plan.price}
+                </span>
+                <span className="text-sm" style={{ color: 'var(--text-3)' }}>
+                  /mois
+                </span>
+              </div>
+
+              {/* Divider */}
+              <div className="h-px w-full" style={{ background: 'var(--border)' }} />
+
+              {/* Features */}
+              <ul className="flex flex-col gap-3 flex-1">
+                {plan.features.map((feature, j) => (
+                  <li key={j} className="flex items-start gap-2.5 text-sm" style={{ color: 'var(--text-2)' }}>
+                    <Check
+                      size={15}
+                      strokeWidth={1.5}
+                      className="flex-shrink-0 mt-0.5"
+                      style={{ color: plan.highlighted ? 'var(--accent)' : 'var(--green)' }}
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA */}
+              <button
+                className={cn(
+                  'h-10 px-5 rounded-xl text-sm font-medium transition-all duration-200',
+                  plan.highlighted ? 'text-white' : 'border'
+                )}
+                style={
+                  plan.highlighted
+                    ? { background: 'var(--accent)', boxShadow: '0 4px 16px rgba(37, 99, 235, 0.3)' }
+                    : { background: 'var(--bg)', border: '1px solid var(--border-md)', color: 'var(--text-1)' }
+                }
+                onMouseEnter={(e) => {
+                  const btn = e.currentTarget
+                  if (plan.highlighted) {
+                    btn.style.background = 'var(--accent-hi)'
+                    btn.style.boxShadow = '0 6px 24px rgba(37, 99, 235, 0.4)'
+                  } else {
+                    btn.style.borderColor = 'var(--accent)'
+                    btn.style.color = 'var(--accent)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  const btn = e.currentTarget
+                  if (plan.highlighted) {
+                    btn.style.background = 'var(--accent)'
+                    btn.style.boxShadow = '0 4px 16px rgba(37, 99, 235, 0.3)'
+                  } else {
+                    btn.style.borderColor = 'var(--border-md)'
+                    btn.style.color = 'var(--text-1)'
+                  }
+                }}
+              >
+                {plan.cta}
+              </button>
+            </motion.div>
           ))}
         </div>
       </div>

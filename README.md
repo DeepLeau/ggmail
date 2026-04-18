@@ -5,8 +5,6 @@ A premium landing page for EmailMind — a SaaS that connects to your email inbo
 ## ✨ Features
 
 - **Interactive Hero** with animated chat interface showing fictional Q&A examples
-- **Dark Theme Design** — sleek dark background with high contrast for a modern, professional look
-- **Dynamic Animations** — smooth, fluid animations throughout the page for an engaging user experience
 - **Problem Section** highlighting daily email overload pain points
 - **Visual Solution** with 3-step horizontal flow (Connect → Ask → Act)
 - **6 Use Case Cards** demonstrating practical business questions
@@ -64,11 +62,11 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Folder | Description |
 |--------|-------------|
-| `src/app` | Next.js App Router pages (`page.tsx`), root layout (`layout.tsx`), and global styles (`globals.css`) |
+| `src/app` | Next.js App Router pages and global styles |
 | `src/components/layout` | Layout components (Navbar) |
-| `src/components/sections` | Page sections — Hero, Problem, Features, UseCases, Integrations, Pricing, CTABanner, Footer, and LogoStrip |
-| `src/lib` | Utility functions (cn helper), static data, and helpers |
+| `src/components/sections` | Page sections (Hero, Pricing, Footer, etc.) |
 | `src/components/ui` | Reusable UI components (AnimatedCanopy) |
+| `src/lib` | Utility functions and static data |
 
 ## 🚀 Deploy to Vercel
 

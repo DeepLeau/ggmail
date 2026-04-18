@@ -1,36 +1,28 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, Inter, IBM_Plex_Mono } from 'next/font/google'
+import { Inter, Space_Mono } from 'next/font/google'
 import './globals.css'
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
-})
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-inter',
   display: 'swap',
-  weight: ['400', '500', '600'],
 })
 
-const ibmPlexMono = IBM_Plex_Mono({
+const spaceMono = Space_Mono({
+  weight: ['400', '700'],
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
-  weight: ['400', '500', '600'],
 })
 
 export const metadata: Metadata = {
-  title: 'LEDGR | Every dollar. Accounted for.',
+  title: 'EmailMind — Posez une question, votre email répond',
   description:
-    'LEDGR gives finance teams real-time visibility into company spend — categorized, approved, and reconciled before the month closes.',
+    'EmailMind cartographie vos conversations email et révèle les opportunités, contacts clés et actions prioritaires — sans fouiller un seul thread.',
   openGraph: {
-    title: 'LEDGR | Every dollar. Accounted for.',
+    title: 'EmailMind — Posez une question, votre email répond',
     description:
-      'Real-time visibility into every dollar your company spends. Finance teams trust LEDGR.',
+      'Cartographiez vos conversations et révélez les opportunités business cachées dans votre boîte mail.',
     type: 'website',
   },
 }
@@ -41,10 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className={`${spaceGrotesk.variable} ${inter.variable} ${ibmPlexMono.variable}`}
-    >
+    <html lang="fr" className={`${inter.variable} ${spaceMono.variable}`}>
       <body className="antialiased">{children}</body>
     </html>
   )
