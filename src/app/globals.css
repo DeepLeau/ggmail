@@ -3,29 +3,26 @@
 @tailwind utilities;
 
 /* ─────────────────────────────────────────
-DESIGN TOKENS — EmailMind light mode
+DESIGN TOKENS — EmailMind dark mode
 ───────────────────────────────────────── */
 :root {
-  --bg: #ffffff;
-  --surface-1: #f8f9fc;
-  --surface-2: #f1f5f9;
-  --border: #e5e7eb;
-  --border-md: #d1d5db;
-  --border-hi: #9ca3af;
-  --text-1: #111827;
-  --text-2: #6b7280;
-  --text-3: #9ca3af;
-  --accent: #2563eb;
-  --accent-hi: #3b82f6;
-  --accent-glow: rgba(37, 99, 235, 0.15);
-  --violet: #7c3aed;
-  --violet-hi: #8b5cf6;
-  --violet-dim: rgba(124, 58, 237, 0.1);
-  --red: #ef4444;
-  --green: #22c55e;
-  --yellow: #f59e0b;
-  --orange: #f97316;
-  --noise-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  --bg:           #0a0a0a;
+  --surface-1:    #111111;
+  --surface-2:    #161616;
+  --border:       rgba(255,255,255,0.06);
+  --border-md:    rgba(255,255,255,0.08);
+  --border-hi:    rgba(255,255,255,0.12);
+  --text-1:       #fafafa;
+  --text-2:       #a1a1aa;
+  --text-3:       #71717a;
+  --accent:       #6366f1;
+  --accent-hi:    #818cf8;
+  --accent-glow:  rgba(99,102,241,0.15);
+  --red:          #f87171;
+  --green:        #4ade80;
+  --yellow:       #facc15;
+  --orange:       #fb923c;
+  --noise-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
 }
 
 /* ─────────────────────────────────────────
@@ -74,38 +71,7 @@ ul {
 }
 
 /* ─────────────────────────────────────────
-LUSTRE TEXT — shimmer on accent word
-───────────────────────────────────────── */
-.lustre-on-white {
-  background: linear-gradient(
-    90deg,
-    var(--text-1) 0%,
-    var(--text-1) 35%,
-    var(--accent) 50%,
-    var(--text-1) 65%,
-    var(--text-1) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-@keyframes shine {
-  from {
-    background-position: 200% center;
-  }
-  to {
-    background-position: -200% center;
-  }
-}
-
-.animate-shine {
-  animation: shine linear infinite;
-}
-
-/* ─────────────────────────────────────────
-GRAIN TEXTURE — subtle overlay
+GRAIN TEXTURE — subtle overlay (dark mode, lower opacity)
 ───────────────────────────────────────── */
 body::after {
   content: '';
@@ -116,7 +82,7 @@ body::after {
   background-image: var(--noise-url);
   background-size: 128px 128px;
   opacity: 0.08;
-  mix-blend-mode: multiply;
+  mix-blend-mode: overlay;
 }
 
 /* ─────────────────────────────────────────
@@ -127,31 +93,29 @@ GLOW DOT — pulsing indicator
   height: 8px;
   background: var(--accent);
   border-radius: 50%;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2), 0 0 12px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2), 0 0 12px rgba(99,102,241,0.6);
   animation: pulse-dot 2s ease-in-out infinite;
   flex-shrink: 0;
 }
 
 @keyframes pulse-dot {
-  0%,
-  100% {
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2), 0 0 12px rgba(37, 99, 235, 0.5);
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(99,102,241,0.2), 0 0 12px rgba(99,102,241,0.6);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.1), 0 0 24px rgba(37, 99, 235, 0.7);
+    box-shadow: 0 0 0 6px rgba(99,102,241,0.1), 0 0 24px rgba(99,102,241,0.8);
   }
 }
 
 /* ─────────────────────────────────────────
-BADGE GLOW — badge pulse
+BADGE GLOW — hero badge pulse
 ───────────────────────────────────────── */
 @keyframes badge-glow {
-  0%,
-  100% {
-    box-shadow: 0 0 16px rgba(124, 58, 237, 0.15);
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(99,102,241,0.15);
   }
   50% {
-    box-shadow: 0 0 28px rgba(124, 58, 237, 0.35);
+    box-shadow: 0 0 28px rgba(99,102,241,0.35);
   }
 }
 
@@ -159,14 +123,13 @@ BADGE GLOW — badge pulse
 HERO BUTTON — breathing glow
 ───────────────────────────────────────── */
 @keyframes hero-btn-breathe {
-  0%,
-  100% {
-    box-shadow: 0 0 32px rgba(37, 99, 235, 0.35), 0 0 80px rgba(37, 99, 235, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  0%, 100% {
+    box-shadow: 0 0 32px rgba(99,102,241,0.35), 0 0 80px rgba(99,102,241,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.18);
   }
   50% {
-    box-shadow: 0 0 48px rgba(37, 99, 235, 0.55), 0 0 120px rgba(37, 99, 235, 0.22),
-      0 0 200px rgba(37, 99, 235, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    box-shadow: 0 0 48px rgba(99,102,241,0.55), 0 0 120px rgba(99,102,241,0.22),
+      0 0 200px rgba(99,102,241,0.08), inset 0 1px 0 rgba(255,255,255,0.18);
   }
 }
 
@@ -174,8 +137,7 @@ HERO BUTTON — breathing glow
 BTN SHIMMER — shimmer sweep on hero primary
 ───────────────────────────────────────── */
 @keyframes btn-shimmer {
-  0%,
-  100% {
+  0%, 100% {
     left: -80%;
     opacity: 0;
   }
@@ -233,8 +195,7 @@ TYPE-IN — terminal lines reveal
 WAVE — waveform bars oscillation
 ───────────────────────────────────────── */
 @keyframes wave {
-  0%,
-  100% {
+  0%, 100% {
     transform: scaleY(1);
   }
   50% {
@@ -270,8 +231,7 @@ SLIDE-T — testimonials marquee
 ORB FLOAT — background orbs drift
 ───────────────────────────────────────── */
 @keyframes orb-float {
-  0%,
-  100% {
+  0%, 100% {
     transform: translate(0, 0);
   }
   50% {
@@ -379,8 +339,7 @@ FLOAT PARTICLE — floating particles
 RING PULSE — CTA decorative rings
 ───────────────────────────────────────── */
 @keyframes ring-pulse {
-  0%,
-  100% {
+  0%, 100% {
     opacity: 0.3;
     transform: scale(1);
   }
@@ -391,8 +350,7 @@ RING PULSE — CTA decorative rings
 }
 
 @keyframes ring-pulse-center {
-  0%,
-  100% {
+  0%, 100% {
     opacity: 0.2;
     transform: translate(-50%, -50%) scale(1);
   }
@@ -460,27 +418,13 @@ SCROLL REVEAL
   opacity: 1;
   transform: none;
 }
-.stagger-up.visible > *:nth-child(1) {
-  transition-delay: 0.05s;
-}
-.stagger-up.visible > *:nth-child(2) {
-  transition-delay: 0.1s;
-}
-.stagger-up.visible > *:nth-child(3) {
-  transition-delay: 0.15s;
-}
-.stagger-up.visible > *:nth-child(4) {
-  transition-delay: 0.2s;
-}
-.stagger-up.visible > *:nth-child(5) {
-  transition-delay: 0.25s;
-}
-.stagger-up.visible > *:nth-child(6) {
-  transition-delay: 0.3s;
-}
-.stagger-up.visible > *:nth-child(7) {
-  transition-delay: 0.35s;
-}
+.stagger-up.visible > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-up.visible > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger-up.visible > *:nth-child(3) { transition-delay: 0.15s; }
+.stagger-up.visible > *:nth-child(4) { transition-delay: 0.2s; }
+.stagger-up.visible > *:nth-child(5) { transition-delay: 0.25s; }
+.stagger-up.visible > *:nth-child(6) { transition-delay: 0.3s; }
+.stagger-up.visible > *:nth-child(7) { transition-delay: 0.35s; }
 
 .stagger-scale > * {
   opacity: 0;
@@ -492,27 +436,13 @@ SCROLL REVEAL
   opacity: 1;
   transform: none;
 }
-.stagger-scale.visible > *:nth-child(1) {
-  transition-delay: 0.06s;
-}
-.stagger-scale.visible > *:nth-child(2) {
-  transition-delay: 0.12s;
-}
-.stagger-scale.visible > *:nth-child(3) {
-  transition-delay: 0.18s;
-}
-.stagger-scale.visible > *:nth-child(4) {
-  transition-delay: 0.24s;
-}
-.stagger-scale.visible > *:nth-child(5) {
-  transition-delay: 0.3s;
-}
-.stagger-scale.visible > *:nth-child(6) {
-  transition-delay: 0.36s;
-}
-.stagger-scale.visible > *:nth-child(7) {
-  transition-delay: 0.42s;
-}
+.stagger-scale.visible > *:nth-child(1) { transition-delay: 0.06s; }
+.stagger-scale.visible > *:nth-child(2) { transition-delay: 0.12s; }
+.stagger-scale.visible > *:nth-child(3) { transition-delay: 0.18s; }
+.stagger-scale.visible > *:nth-child(4) { transition-delay: 0.24s; }
+.stagger-scale.visible > *:nth-child(5) { transition-delay: 0.3s; }
+.stagger-scale.visible > *:nth-child(6) { transition-delay: 0.36s; }
+.stagger-scale.visible > *:nth-child(7) { transition-delay: 0.42s; }
 
 .stagger-left > * {
   opacity: 0;
@@ -524,38 +454,18 @@ SCROLL REVEAL
   opacity: 1;
   transform: none;
 }
-.stagger-left.visible > *:nth-child(1) {
-  transition-delay: 0.08s;
-}
-.stagger-left.visible > *:nth-child(2) {
-  transition-delay: 0.16s;
-}
-.stagger-left.visible > *:nth-child(3) {
-  transition-delay: 0.2s;
-}
-.stagger-left.visible > *:nth-child(4) {
-  transition-delay: 0.24s;
-}
+.stagger-left.visible > *:nth-child(1) { transition-delay: 0.08s; }
+.stagger-left.visible > *:nth-child(2) { transition-delay: 0.16s; }
+.stagger-left.visible > *:nth-child(3) { transition-delay: 0.2s; }
+.stagger-left.visible > *:nth-child(4) { transition-delay: 0.24s; }
 
 /* Manual delays */
-[data-delay='1'] {
-  transition-delay: 0.1s;
-}
-[data-delay='2'] {
-  transition-delay: 0.18s;
-}
-[data-delay='3'] {
-  transition-delay: 0.26s;
-}
-[data-delay='4'] {
-  transition-delay: 0.34s;
-}
-[data-delay='5'] {
-  transition-delay: 0.42s;
-}
-[data-delay='6'] {
-  transition-delay: 0.5s;
-}
+[data-delay='1'] { transition-delay: 0.1s; }
+[data-delay='2'] { transition-delay: 0.18s; }
+[data-delay='3'] { transition-delay: 0.26s; }
+[data-delay='4'] { transition-delay: 0.34s; }
+[data-delay='5'] { transition-delay: 0.42s; }
+[data-delay='6'] { transition-delay: 0.5s; }
 
 /* ─────────────────────────────────────────
 SECTION SEPARATOR
@@ -565,9 +475,9 @@ SECTION SEPARATOR
   background: linear-gradient(
     90deg,
     transparent 5%,
-    rgba(37, 99, 235, 0.15) 30%,
-    rgba(37, 99, 235, 0.1) 50%,
-    rgba(37, 99, 235, 0.15) 70%,
+    rgba(99,102,241,0.2) 30%,
+    rgba(99,102,241,0.12) 50%,
+    rgba(99,102,241,0.2) 70%,
     transparent 95%
   );
   margin: 0 auto;
@@ -585,7 +495,7 @@ SECTION SEPARATOR
   bottom: -60px;
   background: radial-gradient(
     ellipse 100% 100% at 50% 50%,
-    rgba(37, 99, 235, 0.04) 0%,
+    rgba(99,102,241,0.05) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -596,7 +506,7 @@ SECTION SEPARATOR
   display: block;
   width: 80px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(99,102,241,0.6), transparent);
   position: absolute;
   top: 0;
   animation: line-travel 3s ease-in-out infinite;

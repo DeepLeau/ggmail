@@ -4,6 +4,7 @@ A premium landing page for EmailMind — a SaaS that connects to your email inbo
 
 ## ✨ Features
 
+- **Dark Theme Design** with a sleek, modern aesthetic that pops
 - **Interactive Hero** with animated chat interface showing fictional Q&A examples
 - **Problem Section** highlighting daily email overload pain points
 - **Visual Solution** with 3-step horizontal flow (Connect → Ask → Act)
@@ -12,7 +13,7 @@ A premium landing page for EmailMind — a SaaS that connects to your email inbo
 - **3 Testimonials** with realistic social proof
 - **3-Tier Pricing** (Free / Pro €29/mo / Team €79/mo)
 - **Full-width CTA Banner** and minimal Footer
-- Smooth animations with Framer Motion throughout
+- **Dynamic Animations** with Framer Motion throughout — scroll reveals, hover effects, and smooth transitions
 
 ## 🛠️ Tech Stack
 
@@ -62,11 +63,11 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 | Folder | Description |
 |--------|-------------|
-| `src/app` | Next.js App Router pages and global styles |
+| `src/app` | Next.js App Router pages, global styles (dark theme), and root layout |
 | `src/components/layout` | Layout components (Navbar) |
-| `src/components/sections` | Page sections (Hero, Pricing, Footer, etc.) |
-| `src/components/ui` | Reusable UI components (AnimatedCanopy) |
-| `src/lib` | Utility functions and static data |
+| `src/components/sections` | Page sections (Hero, Problem, Solution, UseCases, Features, Metrics, Testimonials, Pricing, CTABanner, Footer, LogoStrip) |
+| `src/components/ui` | Reusable UI components (Button, SectionTag, Badge) |
+| `src/lib` | Utility functions and class name helpers |
 
 ## 🚀 Deploy to Vercel
 
