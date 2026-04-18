@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Inter, Space_Mono, Bricolage_Grotesque } from 'next/font/google'
 import './globals.css'
 
 const inter = Inter({
@@ -13,6 +13,13 @@ const spaceMono = Space_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
   display: 'swap',
+})
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  display: 'swap',
+  weight: ['200', '300', '400', '500', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
@@ -33,8 +40,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr" className={`${inter.variable} ${spaceMono.variable}`}>
-      <body className="antialiased">{children}</body>
+    <html
+      lang="fr"
+      className={`${inter.variable} ${spaceMono.variable} ${bricolageGrotesque.variable}`}
+    >
+      <body className="dark antialiased">{children}</body>
     </html>
   )
 }

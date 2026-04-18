@@ -5,6 +5,7 @@ import { Problem } from '@/components/sections/Problem'
 import { Solution } from '@/components/sections/Solution'
 import { UseCases } from '@/components/sections/UseCases'
 import { Features } from '@/components/sections/Features'
+import { Metrics } from '@/components/sections/Metrics'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { Pricing } from '@/components/sections/Pricing'
 import { CTABanner } from '@/components/sections/CTABanner'
@@ -20,6 +21,7 @@ export default function HomePage() {
       <Solution />
       <UseCases />
       <Features />
+      <Metrics />
       <Testimonials />
       <Pricing />
       <CTABanner />

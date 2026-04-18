@@ -3,48 +3,76 @@
 import { motion } from 'framer-motion'
 
 const COMPANIES = [
-  'Salesforce',
-  'HubSpot',
-  'Zendesk',
-  'Intercom',
-  'Pipedrive',
-  'ActiveCampaign',
-  'Mailchimp',
-  'Brevo',
+  'LVMH',
+  'Dassault',
+  'Accenture',
+  'BNP Paribas',
+  'Carrefour',
+  'Engie',
+  'Thales',
+  'Sanofi',
+  'Orange',
+  'TotalEnergies',
+  'Capgemini',
+  'Deloitte',
 ]
 
 export function LogoStrip() {
   return (
     <section
-      className="py-10 px-6 border-y"
-      style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
+      className="py-10 px-6"
+      style={{
+        borderTop: '1px solid rgba(255,255,255,0.05)',
+        borderBottom: '1px solid rgba(255,255,255,0.05)',
+        background: 'var(--bg)',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
     >
+      {/* Fade left */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          left: 0,
+          width: '160px',
+          background: 'linear-gradient(to right, var(--bg), transparent)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }}
+      />
+      {/* Fade right */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          bottom: 0,
+          right: 0,
+          width: '160px',
+          background: 'linear-gradient(to left, var(--bg), transparent)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }}
+      />
+
       <div className="max-w-5xl mx-auto">
-        {/* Label */}
         <p
-          className="text-center text-xs uppercase tracking-widest mb-8"
+          className="text-center mb-8"
           style={{
-            color: 'var(--text-3)',
-            fontFamily: 'var(--font-mono, monospace)',
+            fontSize: '12px',
+            letterSpacing: '.1em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.3)',
+            fontFamily: 'var(--font-mono), monospace',
           }}
         >
-          Utilisé par des équipes commerciales dans
+          Ills nous font confiance
         </p>
 
-        {/* Ticker strip */}
         <div className="overflow-hidden" style={{ position: 'relative' }}>
-          {/* Fade left */}
           <div
-            className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10"
-            style={{ background: 'linear-gradient(to right, var(--bg), transparent)' }}
-          />
-          {/* Fade right */}
-          <div
-            className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10"
-            style={{ background: 'linear-gradient(to left, var(--bg), transparent)' }}
-          />
-          <div
-            className="flex items-center gap-12"
+            className="flex items-center"
             style={{
               animation: 'ticker 28s linear infinite',
               width: 'max-content',
@@ -53,12 +81,16 @@ export function LogoStrip() {
             {[...COMPANIES, ...COMPANIES].map((name, i) => (
               <motion.span
                 key={i}
-                whileHover={{ color: 'var(--text-2)' }}
-                className="text-sm font-semibold whitespace-nowrap cursor-default"
+                whileHover={{ color: 'rgba(255,255,255,0.5)' }}
+                className="whitespace-nowrap cursor-default"
                 style={{
-                  color: 'var(--text-3)',
-                  letterSpacing: '0.02em',
-                  transition: 'color 0.2s',
+                  fontSize: '15px',
+                  fontWeight: 700,
+                  color: 'rgba(255,255,255,0.18)',
+                  letterSpacing: '.02em',
+                  fontFamily: 'var(--font-bricolage), sans-serif',
+                  transition: 'color 0.3s',
+                  paddingRight: '64px',
                 }}
               >
                 {name}
