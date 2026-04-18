@@ -1,142 +1,113 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { Plane, Monitor, ShieldCheck, UserCheck, Database, FileText, Receipt } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { MessageCircle } from 'lucide-react'
+import { USE_CASES } from '@/lib/data'
+import type { Variants } from 'framer-motion'
+
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 },
+  },
+}
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+}
 
 export function UseCases() {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.unobserve(entry.target)
-        }
-      },
-      { threshold: 0.15 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
   return (
     <section
-      ref={sectionRef}
-      className="relative py-[clamp(5.5rem,9vw,11rem)] px-[clamp(1.5rem,5vw,4rem)]"
-      style={{ background: 'var(--bg)' }}
+      className="py-20 lg:py-24 px-4 sm:px-6"
+      style={{ background: 'var(--surface-1)' }}
     >
-      {/* Scan line */}
-      <div className="scan-line absolute top-0 left-0 w-full h-[1px] pointer-events-none" style={{ background: 'rgba(255,255,255,0.10)' }} />
-      <div className="max-w-[clamp(70rem,92vw,96rem)] mx-auto">
-        <div className="mb-16 reveal-up" style={isVisible ? { opacity: 1, transform: 'translateY(0)' } : {}}>
-          <span className="font-mono text-xs font-medium uppercase tracking-[0.18em] inline-block mb-8" style={{ color: 'var(--amber)' }}>[04] AUTOMATION</span>
-          <h2 className="font-display font-light leading-[1.1] tracking-tight text-[clamp(2rem,3.5vw,3.25rem)] mb-6 max-w-2xl" style={{ color: 'var(--text-1)' }}>
-            Approvals that don&apos;t require a meeting.
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-14 lg:mb-16">
+          <span
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-widest mb-5"
+            style={{
+              background: 'var(--violet-dim)',
+              color: 'var(--violet)',
+              border: '1px solid rgba(124, 58, 237, 0.2)',
+            }}
+          >
+            <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--violet)' }} />
+            Cas d&apos;usage
+          </span>
+          <h2
+            className="text-3xl lg:text-4xl font-bold tracking-tight mb-4"
+            style={{ color: 'var(--text-1)', letterSpacing: '-0.025em' }}
+          >
+            Des réponses que vous cherchiez
+            <br className="hidden sm:block" /> depuis des heures
           </h2>
-          <p className="font-body max-w-[60ch] leading-relaxed text-sm md:text-base" style={{ color: 'var(--text-2)' }}>
-            Define your policy once. LEDGR enforces it on every submission — automatically escalating exceptions, routing by amount threshold, and flagging policy violations before they reach your inbox.
+          <p className="text-base max-w-lg mx-auto" style={{ color: 'var(--text-2)', lineHeight: '1.7' }}>
+            EmailMind répond à vos questions métier en quelques secondes, avec le contexte exact de vos conversations.
           </p>
         </div>
 
-        {/* Workflow Pipeline Visualizer */}
-        <div
-          className="relative overflow-hidden reveal-up group"
-          style={{
-            ...(isVisible ? { opacity: 1, transform: 'translateY(0)' } : {}),
-            transitionDelay: '200ms',
-            transition: 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)',
-            background: 'var(--surface-1)',
-            border: '1px solid var(--border)',
-            padding: 'clamp(2rem,3vw,3rem)',
-          }}
+        {/* Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-60px' }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
         >
-          {/* Background connection line */}
-          <div className="absolute top-1/2 left-16 right-16 h-[1px] -translate-y-1/2 hidden md:block z-0 pointer-events-none" style={{ background: 'rgba(255,255,255,0.06)' }} />
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10 min-h-[220px]">
-            {/* Step 1 */}
-            <div className="relative flex flex-col items-center text-center h-full">
-              <span className="font-mono text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(240,240,245,0.5)' }}>1. Submitted</span>
+          {USE_CASES.map((uc, i) => (
+            <motion.div
+              key={i}
+              variants={cardVariants}
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              className="relative rounded-2xl p-6 flex flex-col gap-4 cursor-default group"
+              style={{
+                background: 'var(--bg)',
+                border: '1px solid var(--border)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+              }}
+            >
+              {/* Icon */}
               <div
-                className="w-12 h-12 flex items-center justify-center mb-6 transition-all duration-300 relative z-10 mt-auto"
-                style={{ background: 'var(--surface-2)', border: '1px solid rgba(255,255,255,0.10)' }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: 'var(--violet-dim)' }}
               >
-                <FileText size={20} className="transition-colors duration-300" style={{ color: 'rgba(240,240,245,0.5)' }} strokeWidth={1.5} />
+                <MessageCircle size={18} strokeWidth={1.5} style={{ color: 'var(--violet)' }} />
               </div>
-              <span className="font-mono text-xs mt-auto" style={{ color: 'rgba(240,240,245,0.7)' }}>Aria C. · $840.00</span>
-            </div>
 
-            {/* Step 2 */}
-            <div className="relative flex flex-col items-center text-center h-full hidden md:flex">
-              <span className="font-mono text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(240,240,245,0.5)' }}>2. Policy Engine</span>
+              {/* Question */}
+              <p
+                className="text-base font-semibold leading-snug"
+                style={{ color: 'var(--text-1)', letterSpacing: '-0.01em' }}
+              >
+                {uc.question}
+              </p>
+
+              {/* Divider */}
+              <div className="h-px w-full" style={{ background: 'var(--border)' }} />
+
+              {/* Answer */}
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--text-2)' }}>
+                {uc.answer}
+              </p>
+
+              {/* Subtle hover accent */}
               <div
-                className="w-12 h-12 flex items-center justify-center mb-6 transition-all duration-300 relative z-10 mt-auto"
-                style={{ background: 'var(--surface-2)', border: '1px solid rgba(255,255,255,0.10)' }}
-              >
-                <ShieldCheck size={20} className="transition-colors duration-300" style={{ color: 'rgba(240,240,245,0.5)' }} strokeWidth={1.5} />
-              </div>
-              <span className="font-mono text-xs mt-auto" style={{ color: 'rgba(240,240,245,0.7)' }}>Rule: &lt;$1k Auto-Approve</span>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative flex flex-col items-center text-center h-full hidden md:flex">
-              <span className="font-mono text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(240,240,245,0.5)' }}>3. Approval</span>
-              <div
-                className="w-12 h-12 flex items-center justify-center mb-6 transition-all duration-300 relative z-10 mt-auto"
-                style={{ background: 'var(--surface-2)', border: '1px solid rgba(255,255,255,0.10)' }}
-              >
-                <UserCheck size={20} className="transition-colors duration-300" style={{ color: 'rgba(240,240,245,0.5)' }} strokeWidth={1.5} />
-              </div>
-              <span className="font-mono text-xs mt-auto" style={{ color: 'var(--amber)' }}>Bypassed (Auto)</span>
-            </div>
-
-            {/* Step 4 */}
-            <div className="relative flex flex-col items-center text-center h-full hidden md:flex">
-              <span className="font-mono text-xs uppercase tracking-widest mb-6" style={{ color: 'rgba(240,240,245,0.5)' }}>4. Reconciled</span>
-              <div
-                className="w-12 h-12 flex items-center justify-center mb-6 transition-all duration-300 relative z-10 mt-auto"
-                style={{ background: 'var(--surface-2)', border: '1px solid rgba(255,255,255,0.10)' }}
-              >
-                <Database size={20} className="transition-colors duration-300" style={{ color: 'rgba(240,240,245,0.5)' }} strokeWidth={1.5} />
-              </div>
-              <span className="font-mono text-xs mt-auto" style={{ color: 'rgba(240,240,245,0.7)' }}>Synced to ERP</span>
-            </div>
-          </div>
-
-          {/* Animated Token */}
-          <div
-            id="expense-token"
-            className="absolute top-1/2 -translate-y-1/2 h-10 flex items-center px-4 pointer-events-none w-[max-content]"
-            style={{
-              left: '2rem',
-              opacity: 0,
-              background: 'var(--amber)',
-              boxShadow: '0 0 20px rgba(232,160,32,0.3)',
-              transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
-              zIndex: 20,
-            }}
-          >
-            <Receipt size={16} className="mr-2 flex-shrink-0" style={{ color: 'var(--bg)' }} strokeWidth={1.5} />
-            <span className="font-mono text-xs font-semibold" style={{ color: 'var(--bg)' }}>$840.00</span>
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col sm:flex-row gap-8 pt-6 reveal-up" style={{
-          ...(isVisible ? { opacity: 1, transform: 'translateY(0)' } : {}),
-          transitionDelay: '400ms',
-          borderTop: '1px solid var(--border)',
-        }}>
-          <div>
-            <span className="font-mono text-xl block mb-1" style={{ color: 'var(--text-1)' }}>84%</span>
-            <span className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--text-2)' }}>Approved Automatically</span>
-          </div>
-          <div>
-            <span className="font-mono text-xl block mb-1" style={{ color: 'var(--text-1)' }}>2.1 <span className="text-sm">hrs</span></span>
-            <span className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--text-2)' }}>Average Time to Approval</span>
-          </div>
-        </div>
+                className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                style={{ background: 'var(--violet)' }}
+              />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   )
